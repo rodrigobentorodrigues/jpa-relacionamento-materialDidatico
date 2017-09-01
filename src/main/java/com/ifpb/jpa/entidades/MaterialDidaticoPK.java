@@ -3,11 +3,13 @@ package com.ifpb.jpa.entidades;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class MaterialDidaticoPK implements Serializable{
     
+    @Column(length = 45)
     private String origem;
     private long codigo;
 

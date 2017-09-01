@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,14 +26,21 @@ public class MaterialDidatico implements Serializable {
     @Column(length = 55)
     private String autor;
     private boolean publico;
-//    @Column(columnDefinition = "numeric precision(6,2)")
+//    @Column(columnDefinition = "NUMERIC PRECISION(6,2)")
+    @Column(columnDefinition = "numeric(6,2)")
     private double tamanho;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(length = 15)
+    private TipoMaterialDidatico tipo;
     
     public MaterialDidatico(){
         this.dataCadastro = new Date();
     }
 
-    public MaterialDidatico(MaterialDidaticoPK chaveComposta, String titulo, String descricao, String autor, boolean publico, double tamanho) {
+    public MaterialDidatico(MaterialDidaticoPK chaveComposta, String titulo,
+            String descricao, String autor, boolean publico,
+            double tamanho, TipoMaterialDidatico tipo) {
         this();
         this.chaveComposta = chaveComposta;
         this.titulo = titulo;
@@ -39,6 +48,21 @@ public class MaterialDidatico implements Serializable {
         this.autor = autor;
         this.publico = publico;
         this.tamanho = tamanho;
+        this.tipo = tipo;
+    }
+    
+    public enum TipoMaterialDidatico {
+        APOSTILA,
+        VIDEOAULA,
+        APRESENTACAO
+    }
+
+    public TipoMaterialDidatico getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoMaterialDidatico tipo) {
+        this.tipo = tipo;
     }
     
     public MaterialDidaticoPK getChaveComposta() {
